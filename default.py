@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
 
 """ Autoruns
-    2015 fightnight"""
+    2015 fightnight
+    2022 bittor7x0"""
 
-import xbmc,xbmcaddon,xbmcgui,xbmcplugin,urllib,os,re,sys
+import xbmc,xbmcvfs,xbmcaddon,xbmcgui,xbmcplugin,urllib.request,urllib.parse,urllib.error,os,re,sys
+import xml.etree.ElementTree as ET
+
+SERVICE_DISABLED = 'Autoruns_service_disabled'
 
 def list_addons():
       #info directory
-      addDir('[COLOR blue][B]%s[/B][/COLOR]' % (translate(30001)),'None',None,os.path.join(xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')).decode('utf-8'),'icon.png'))
+      addDir('[COLOR blue][B]%s[/B][/COLOR]' % (translate(30001)),'None',None,xbmcaddon.Addon().getAddonInfo('icon'))
 
       #get the path of addons
-      pathofaddons = xbmc.translatePath('special://home/addons').decode('utf-8')
+      pathofaddons = xbmcvfs.translatePath('special://home/addons')
 
       #list with addons
       listofaddons = os.listdir(pathofaddons)
@@ -27,12 +31,12 @@ def list_addons():
                   #get addon.xml content
                   xml_content=openfile(addon_xml_path)
 
-                  if re.search('point="xbmc.service"',xml_content):
-                        #addon with service on
-                        addDir('%s (on)' % (individual_addon),path_to_addon,1,os.path.join(path_to_addon,'icon.png'))
-                  elif re.search('point="xbmc.pass"',xml_content):
+                  if re.search(SERVICE_DISABLED,xml_content):
                         #addon with service off
-                        addDir('[B][COLOR gold]%s[/B] (off)[/COLOR]' % (individual_addon),path_to_addon,1,os.path.join(path_to_addon,'icon.png'))
+                        addDir('[B][COLOR gold]%s[/B] (off)[/COLOR]' % (individual_addon),path_to_addon,1,xbmcaddon.Addon(individual_addon).getAddonInfo('icon'))
+                  elif re.search('point="xbmc.service"',xml_content):
+                        #addon with service on
+                        addDir('%s (on)' % (individual_addon),path_to_addon,1,xbmcaddon.Addon(individual_addon).getAddonInfo('icon'))
                   else:
                         #addon with no service
                         pass
@@ -45,11 +49,17 @@ def change_state(name,path):
       content=openfile(addon_xml_path)
 
       if re.search('COLOR gold',name):
-            #service off to on, so we change from fake variable to service variable
-            content=content.replace('point="xbmc.pass"','point="xbmc.service"')
+            #service off to on, so we uncomment the service element
+            content=content.replace('<!--%s ' % (SERVICE_DISABLED),'').replace(' %s-->' % (SERVICE_DISABLED),'')
       else:
-            #service on to off, so we change from service variable to fake variable
-            content=content.replace('point="xbmc.service"','point="xbmc.pass"')
+            #service on to off, so we comment the service element
+            root = ET.fromstring(content)
+            parent = root.findall("./extension[@point='xbmc.service']/..")[0]
+            child = parent.findall("./extension[@point='xbmc.service']")[0]
+            commented = '%s \n%s %s' % (SERVICE_DISABLED, ET.tostring(child).decode("utf-8"), SERVICE_DISABLED)
+            parent.remove(child)
+            parent.append(ET.Comment(commented))
+            content=ET.tostring(root, encoding='utf8', method='xml')
 
       #change state on addon.xml
       savefile(addon_xml_path,content)
@@ -59,23 +69,26 @@ def change_state(name,path):
 
 def openfile(path_to_the_file):
     try:
-        fh = open(path_to_the_file, 'rb')
+        fh = xbmcvfs.File(path_to_the_file, 'rb')
         contents=fh.read()
         fh.close()
         return contents
     except:
-        print "Wont open: %s" % filename
+        print("Wont open: %s" % filename)
         return None
 
 def savefile(path_to_the_file,content):
     try:
-        fh = open(path_to_the_file, 'wb')
+        fh = xbmcvfs.File(path_to_the_file, 'wb')
         fh.write(content)
         fh.close()
-    except: print "Wont save: %s" % filename
+    except: print("Wont save: %s" % filename)
 
 def addDir(name,path,mode,iconimage):
-      return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url="%s?path=%s&mode=%s&name=%s" % (sys.argv[0],urllib.quote_plus(path),mode,urllib.quote_plus(name)),listitem=xbmcgui.ListItem(name,iconImage="DefaultFolder.png", thumbnailImage=iconimage),isFolder=False)
+      listItem = xbmcgui.ListItem(label=name)
+      listItem.setArt({'icon': "DefaultFolder.png"})
+      listItem.setArt({'thumb': iconimage})
+      return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url="%s?path=%s&mode=%s&name=%s" % (sys.argv[0],urllib.parse.quote_plus(path),mode,urllib.parse.quote_plus(name)),listitem=listItem,isFolder=False)
 
 def get_params():
       param=[]
@@ -95,16 +108,16 @@ def get_params():
       return param
 
 def translate(text):
-      return xbmcaddon.Addon().getLocalizedString(text).encode('utf-8')
+      return xbmcaddon.Addon().getLocalizedString(text)
 
 params=get_params()
 path=None
 name=None
 mode=None
 
-try: path=urllib.unquote_plus(params["path"])
+try: path=urllib.parse.unquote_plus(params["path"])
 except: pass
-try: name=urllib.unquote_plus(params["name"])
+try: name=urllib.parse.unquote_plus(params["name"])
 except: pass
 try: mode=int(params["mode"])
 except: pass
