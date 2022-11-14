@@ -15,5 +15,8 @@
         <description lang="pt">Pode desactivar serviços do arranque, melhorando a velocidade interna do Kodi.</description>
         <disclaimer lang="en">Opensource addon not endorsed with Team Kodi.</disclaimer>
         <disclaimer lang="pt">Addon opensource não afliado com a Equipa Kodi.</disclaimer>
+        <assets>
+            <icon>resources/icon.png</icon>
+        </assets>
     </extension>
 </addon>
