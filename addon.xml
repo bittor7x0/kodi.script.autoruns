@@ -11,10 +11,13 @@
         <source>https://github.com/bittor7x0/kodi.script.autoruns</source>
         <summary lang="en">Disable startup services on Kodi</summary>
         <summary lang="pt">Desactive serviços do arranque no Kodi</summary>
+        <summary lang="es">Desactive el inicio de servicios en Kodi</summary>
         <description lang="en">You can disable startup services, improving Kodi internal speed.</description>
         <description lang="pt">Pode desactivar serviços do arranque, melhorando a velocidade interna do Kodi.</description>
+        <description lang="es">Puede desactivar el inicio de servicios, mejorando la velocidad interna de Kodi.</description>
         <disclaimer lang="en">Opensource addon not endorsed with Team Kodi.</disclaimer>
         <disclaimer lang="pt">Addon opensource não afliado com a Equipa Kodi.</disclaimer>
+        <disclaimer lang="es">Addon opensource no afiliado con el Equipo de Kodi.</disclaimer>
         <assets>
             <icon>resources/icon.png</icon>
         </assets>
