@@ -43,7 +43,7 @@ def change_state(name,path):
 
       #get addon.xml content
       content=openfile(addon_xml_path)
-      
+
       if re.search('COLOR gold',name):
             #service off to on, so we change from fake variable to service variable
             content=content.replace('point="xbmc.pass"','point="xbmc.service"')
@@ -56,7 +56,6 @@ def change_state(name,path):
 
       #refresh the list
       xbmc.executebuiltin("Container.Refresh")
-      
 
 def openfile(path_to_the_file):
     try:
@@ -71,7 +70,7 @@ def openfile(path_to_the_file):
 def savefile(path_to_the_file,content):
     try:
         fh = open(path_to_the_file, 'wb')
-        fh.write(content)  
+        fh.write(content)
         fh.close()
     except: print "Wont save: %s" % filename
 
@@ -92,7 +91,7 @@ def get_params():
                   splitparams={}
                   splitparams=pairsofparams[i].split('=')
                   if (len(splitparams))==2:
-                        param[splitparams[0]]=splitparams[1]                 
+                        param[splitparams[0]]=splitparams[1]
       return param
 
 def translate(text):
@@ -112,5 +111,5 @@ except: pass
 
 if mode==None: list_addons()
 elif mode==1: change_state(name,path)
-                       
+
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
