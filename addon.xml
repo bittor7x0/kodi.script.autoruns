@@ -18,6 +18,7 @@
         <disclaimer lang="en">Opensource addon not endorsed with Team Kodi.</disclaimer>
         <disclaimer lang="pt">Addon opensource não afliado com a Equipa Kodi.</disclaimer>
         <disclaimer lang="es">Addon opensource no afiliado con el Equipo de Kodi.</disclaimer>
+        <license>GPL-3.0-or-later</license>
         <assets>
             <icon>resources/icon.png</icon>
         </assets>
