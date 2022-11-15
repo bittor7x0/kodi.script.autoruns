@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<addon id="script.autoruns" name="Autoruns" version="1.0.2" provider-name="bittor7x0">
+<addon id="script.autoruns" name="Autoruns" version="1.0.2" provider-name="fightnight, bittor7x0">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>
