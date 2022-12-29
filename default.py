@@ -31,12 +31,17 @@ def list_addons():
                   #get addon.xml content
                   xml_content=openfile(addon_xml_path)
 
+                  #get icon from addon.xml because creating a xbmcaddon.Addon(individual_addon) object causes the exception "Unknown addon id 'xxxx'" with installed addons but not enabled
+                  root = ET.fromstring(xml_content)
+                  xml_icon = root.findall("./extension/assets/icon")
+                  addon_icon_path = os.path.join(path_to_addon,xml_icon[0].text if xml_icon else 'icon.png')
+
                   if re.search(SERVICE_DISABLED,xml_content):
                         #addon with service off
-                        addDir('[B][COLOR gold]%s[/B] (off)[/COLOR]' % (individual_addon),path_to_addon,1,xbmcaddon.Addon(individual_addon).getAddonInfo('icon'))
+                        addDir('[B][COLOR gold]%s[/B] (off)[/COLOR]' % (individual_addon),path_to_addon,1,addon_icon_path)
                   elif re.search('point="xbmc.service"',xml_content):
                         #addon with service on
-                        addDir('%s (on)' % (individual_addon),path_to_addon,1,xbmcaddon.Addon(individual_addon).getAddonInfo('icon'))
+                        addDir('%s (on)' % (individual_addon),path_to_addon,1,addon_icon_path)
                   else:
                         #addon with no service
                         pass
