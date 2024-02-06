@@ -1,5 +1,10 @@
 # Autoruns: Disable startup services on Kodi
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE.txt "Read License GPL v3") [![GitHub release](https://img.shields.io/github/release/bittor7x0/kodi.script.autoruns.svg)](https://github.com/bittor7x0/kodi.script.autoruns/releases/latest "Download latest release")
+[![Kodi versions](https://img.shields.io/badge/kodi%20versions-19--20--21-blue)](https://kodi.tv/ "Kodi add-on for Kodi 19, 20 and 21")
+[![GitHub release](https://img.shields.io/github/release/bittor7x0/kodi.script.autoruns.svg)](https://github.com/bittor7x0/kodi.script.autoruns/releases/latest "Download latest release")
+[![Kodi Addon checks](https://img.shields.io/github/actions/workflow/status/bittor7x0/kodi.script.autoruns/addon-check.yml?branch=main&label=CI)](https://github.com/bittor7x0/kodi.script.autoruns/actions/workflows/addon-check.yml "Kodi Addon checks")
+[![Python Code Scans](https://img.shields.io/github/actions/workflow/status/bittor7x0/kodi.script.autoruns/code-scan.yml?branch=main&label=code%20scan)](https://github.com/bittor7x0/kodi.script.autoruns/actions/workflows/code-scan.yml "Python Code Scans")
+[![Coverity Scan Status](https://img.shields.io/coverity/scan/29705.svg)](https://scan.coverity.com/projects/bittor7x0-kodi-script-autoruns "View Coverity Scan Status")
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE.txt "Read License GPL v3")
 
 ![](https://github.com/bittor7x0/kodi.script.autoruns/blob/main/resources/icon.png)
 
