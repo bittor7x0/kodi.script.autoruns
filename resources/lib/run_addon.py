@@ -22,7 +22,7 @@ SERVICE_DISABLED = "Autoruns_service_disabled"
 
 def list_addons(argv):
     # info directory
-    addDir(
+    add_dir(
         "[COLOR blue][B]%s[/B][/COLOR]" % (translate(30001)),
         "None",
         None,
@@ -56,7 +56,7 @@ def list_addons(argv):
 
             if re.search(SERVICE_DISABLED, xml_content):
                 # addon with service off
-                addDir(
+                add_dir(
                     "[B][COLOR gold]%s[/B] (off)[/COLOR]" % (individual_addon),
                     path_to_addon,
                     1,
@@ -65,7 +65,7 @@ def list_addons(argv):
                 )
             elif re.search('point="xbmc.service"', xml_content):
                 # addon with service on
-                addDir(
+                add_dir(
                     "%s (on)" % (individual_addon),
                     path_to_addon,
                     1,
@@ -116,8 +116,8 @@ def openfile(path_to_the_file):
         contents = fh.read()
         fh.close()
         return contents
-    except:
-        print("Wont open: %s" % filename)
+    except Exception:
+        print("Wont open: %s" % path_to_the_file)
         return None
 
 
@@ -126,19 +126,19 @@ def savefile(path_to_the_file, content):
         fh = xbmcvfs.File(path_to_the_file, "wb")
         fh.write(content)
         fh.close()
-    except:
-        print("Wont save: %s" % filename)
+    except Exception:
+        print("Wont save: %s" % path_to_the_file)
 
 
-def addDir(name, path, mode, iconimage, argv):
-    listItem = xbmcgui.ListItem(label=name)
-    listItem.setArt({"icon": "DefaultFolder.png"})
-    listItem.setArt({"thumb": iconimage})
+def add_dir(name, path, mode, iconimage, argv):
+    list_item = xbmcgui.ListItem(label=name)
+    list_item.setArt({"icon": "DefaultFolder.png"})
+    list_item.setArt({"thumb": iconimage})
     return xbmcplugin.addDirectoryItem(
         handle=int(argv[1]),
         url="%s?path=%s&mode=%s&name=%s"
         % (argv[0], urllib.parse.quote_plus(path), mode, urllib.parse.quote_plus(name)),
-        listitem=listItem,
+        listitem=list_item,
         isFolder=False,
     )
 
@@ -173,18 +173,18 @@ def run(argv):
 
     try:
         path = urllib.parse.unquote_plus(params["path"])
-    except:
+    except Exception:
         pass
     try:
         name = urllib.parse.unquote_plus(params["name"])
-    except:
+    except Exception:
         pass
     try:
         mode = int(params["mode"])
-    except:
+    except Exception:
         pass
 
-    if mode == None:
+    if mode is None:
         list_addons(argv)
     elif mode == 1:
         change_state(name, path)
