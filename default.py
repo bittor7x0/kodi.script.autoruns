@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """ Autoruns
-    2015 fightnight
-    2022 bittor7x0"""
+    2013-2015 fightnight
+    2022-2024 bittor7x0"""
 
 import xbmc,xbmcvfs,xbmcaddon,xbmcgui,xbmcplugin,urllib.request,urllib.parse,urllib.error,os,re,sys
 import xml.etree.ElementTree as ET
