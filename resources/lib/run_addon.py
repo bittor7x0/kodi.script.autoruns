@@ -4,8 +4,18 @@
     2013-2015 fightnight
     2022-2024 bittor7x0"""
 
-import xbmc, xbmcvfs, xbmcaddon, xbmcgui, xbmcplugin, urllib.request, urllib.parse, urllib.error, os, re
+import os
+import re
+import urllib.error
+import urllib.parse
+import urllib.request
 import xml.etree.ElementTree as ET
+
+import xbmc
+import xbmcaddon
+import xbmcgui
+import xbmcplugin
+import xbmcvfs
 
 SERVICE_DISABLED = "Autoruns_service_disabled"
 
