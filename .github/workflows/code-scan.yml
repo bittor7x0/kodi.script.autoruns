@@ -95,3 +95,22 @@ jobs:
             -Dsonar.organization=bittor7x0
             -Dsonar.projectKey=bittor7x0_kodi-script-autoruns
             -Dsonar.python.version=3.7,3.8,3.9,3.10
+
+  codeql-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:python"
