@@ -89,7 +89,7 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Analyze Python code with SonarCloud
-        uses: SonarSource/sonarcloud-github-action@v2.2.0
+        uses: SonarSource/sonarcloud-github-action@v2.3.0
         with:
           args: >
             -Dsonar.organization=bittor7x0
